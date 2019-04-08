@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sg-db",
+    "password": "4udu9EtE",
+    "database": "proftpd",
+    "host": "172.31.16.156",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "sg-db",
+    "password": "4udu9EtE",
+    "database": "proftpd",
+    "host": "172.31.16.156",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "sg-db",
+    "password": "4udu9EtE",
+    "database": "proftpd",
+    "host": "172.31.16.156",
+    "dialect": "mysql"
+  }
+}
