@@ -19,13 +19,14 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
+const models = require('./models/mysql');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.config({ path: '.env.example' });
+dotenv.config({ path: '.env' });
 
 /**
  * Controllers (route handlers).
@@ -34,6 +35,7 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const fileHistoryController = require('./controllers/filehistory');
 
 /**
  * API keys and Passport configuration.
@@ -178,6 +180,9 @@ app.post('/api/pinterest', passportConfig.isAuthenticated, passportConfig.isAuth
 app.get('/api/google-maps', apiController.getGoogleMaps);
 app.get('/api/chart', apiController.getChart);
 
+app.get('/api/filehistory', fileHistoryController.index);
+app.get('/api/filehistory/sync', fileHistoryController.sync);
+
 /**
  * OAuth authentication routes. (Sign in)
  */
@@ -243,6 +248,7 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
+//models.sequelize.sync().then(function () {
 /**
  * Start Express server.
  */
@@ -250,5 +256,6 @@ app.listen(app.get('port'), () => {
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
   console.log('  Press CTRL-C to stop\n');
 });
+//});
 
 module.exports = app;
